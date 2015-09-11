@@ -1,0 +1,16 @@
+config-version: 1 #Do not change this!
+
+#The minimum height of the bedrock being mined
+#Anything on this level will be minable!
+minimum-height: 3
+
+#List of tools allowed that are allowed to mine bedrock
+allowed-tools:
+- DIAMOND_PICKAXE
+- GOLDEN_PICKAXE
+
+#This sets the speed at which bedrock is to be mined in seconds
+mining-speed: 10
+
+#Should breaking speed be affected by an efficiency enchantment?
+efficiency: true
