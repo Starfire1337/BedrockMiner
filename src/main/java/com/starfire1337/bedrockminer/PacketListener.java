@@ -81,15 +81,17 @@ public class PacketListener {
                                                     int speed = BedrockMiner.getInstance().getConfig().getInt("mining-speed");
                                                     int enchantLevel = sender.getItemInHand().containsEnchantment(Enchantment.DIG_SPEED) ? sender.getItemInHand().getEnchantmentLevel(Enchantment.DIG_SPEED) : 0;
                                                     long sleepTime = BedrockMiner.getInstance().getConfig().getBoolean("efficiency") ? Math.round(speed / (1 + (0.3 * enchantLevel))) * 2 : (speed * 2);
-                                                    for (int i = 0; i < 500; i++) {
-                                                        if (!mine.containsKey(sender.getName()) || !mine.get(sender.getName()).equals(block)) {
-                                                            sendBlockBreakEffect(sender, blockPosition, -1);
-                                                            break;
+                                                    if(sleepTime != 0) {
+                                                        for (int i = 0; i < 100; i++) {
+                                                            if (!mine.containsKey(sender.getName()) || !mine.get(sender.getName()).equals(block)) {
+                                                                sendBlockBreakEffect(sender, blockPosition, -1);
+                                                                break;
+                                                            }
+                                                            if (i % 10 == 0)
+                                                                sendBlockBreakEffect(sender, blockPosition, i / 10);
+                                                            Thread.sleep(sleepTime);
+                                                            i++;
                                                         }
-                                                        if (i % 50 == 0)
-                                                            sendBlockBreakEffect(sender, blockPosition, i / 50);
-                                                        Thread.sleep(sleepTime);
-                                                        i++;
                                                     }
                                                     if (mine.containsKey(sender.getName())) {
                                                         if (!mine.get(sender.getName()).equals(block))
