@@ -67,7 +67,7 @@ public class PacketListener {
                                     for(String material : BedrockMiner.getInstance().getConfig().getStringList("allowed-tools")) {
                                         allowedMaterials.add(Material.getMaterial(material));
                                     }
-                                    if(!allowedMaterials.contains(sender.getItemInHand().getType()))
+                                    if(!allowedMaterials.contains(sender.getItemInHand().getType()) && !sender.hasPermission("bedrockminer.bypass"))
                                         return;
 
                                     Object[] enumConstants = Reflection.getMinecraftClass("PacketPlayInBlockDig").getDeclaredClasses()[0].getEnumConstants();
