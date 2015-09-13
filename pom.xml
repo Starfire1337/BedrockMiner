@@ -6,7 +6,7 @@
 
     <groupId>com.starfire1337.bedrockminer.BedrockMiner</groupId>
     <artifactId>BedrockMiner</artifactId>
-    <version>1.0.0-b${env.BUILD_NUMBER}</version>
+    <version>1.0.2-b${env.BUILD_NUMBER}</version>
 
     <build>
         <plugins>
