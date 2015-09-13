@@ -2,8 +2,11 @@ package com.starfire1337.bedrockminer;
 
 import com.comphenix.tinyprotocol.Reflection;
 import com.comphenix.tinyprotocol.TinyProtocol;
+
 import io.netty.channel.Channel;
+
 import org.bukkit.Effect;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
@@ -61,7 +64,7 @@ public class PacketListener {
                             public void run() {
                                 try {
                                     final Block block = sender.getWorld().getBlockAt((int) blockPosition.getClass().getMethod("getX").invoke(blockPosition), (int) blockPosition.getClass().getMethod("getY").invoke(blockPosition), (int) blockPosition.getClass().getMethod("getZ").invoke(blockPosition));
-                                    if (block == null || block.getType() != Material.BEDROCK || block.getY() < BedrockMiner.getInstance().getConfig().getInt("minimum-height") || !sender.hasPermission("bedrockminer.mine"))
+                                    if (block == null || block.getType() != Material.BEDROCK || block.getY() < BedrockMiner.getInstance().getConfig().getInt("minimum-height") || !sender.hasPermission("bedrockminer.mine") || sender.getGameMode() == GameMode.CREATIVE)
                                         return;
                                     List<Material> allowedMaterials = new ArrayList<>();
                                     for(String material : BedrockMiner.getInstance().getConfig().getStringList("allowed-tools")) {
@@ -102,8 +105,10 @@ public class PacketListener {
                                                             public void run() {
                                                                 block.getDrops().clear();
                                                                 block.getDrops().add(new ItemStack(Material.BEDROCK));
+
                                                                 BlockBreakEvent e = new BlockBreakEvent(block, sender);
                                                                 BedrockMiner.getInstance().getServer().getPluginManager().callEvent(e);
+
                                                                 if (e.isCancelled()) {
                                                                     try {
                                                                         sendBlockBreakEffect(sender, blockPosition, -1);

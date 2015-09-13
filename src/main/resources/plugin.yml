@@ -3,3 +3,4 @@ author: Starfire1337
 version: ${version}
 main: com.starfire1337.bedrockminer.BedrockMiner
 description: Mine bedrock!
+softdepend: [NoCheatPlus, AAC]
